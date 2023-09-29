@@ -22,6 +22,12 @@
     padding: 5px 10px;
 }
 
+.form textarea {
+    min-width: 150px;
+    max-width: 90%;
+    min-height: 1.5rem;
+}
+
 .btn {
     cursor: pointer;
     border: 1px solid black;

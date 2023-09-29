@@ -12,40 +12,79 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 5px;
-    margin: 5px;
+    margin: 10px;
+    width: 250px;
     box-shadow: 0px 0px 10px 1px grey;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 .post-media {
-    /* position: relative; */
-    min-height: 100px;
-    min-width: 250px;
-    max-width: 250px;
-    max-height: 200px;
+    position: relative;
+    width: 250px;
+    height: 200px;
 }
 
 .post-media img {
     width: 100%;
+    height: 100%;
 }
 
 .overlay {
     position: absolute;
     top: 0;
     left: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+
+.overlay .creator {
+    margin: 2px 0px;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+
+.overlay .time {
+    font-size: .8rem;
 }
 
 .post-details {
     display: flex;
     flex-direction: column;
+    padding: 10px 20px;
+}
+
+.post-details .post-tag:hover {
+    color: green;
+}
+
+.post-details .post-title {
+    margin: 5px 0px;
+    text-transform: capitalize;
+}
+
+.post-details .post-message {
+    margin: 5px 0px;
 }
 
 .post-edit button {
     border: none;
-    background-color: white;
-    font-weight: bold;
     cursor: pointer;
+    background: transparent;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.post-edit button:hover {
+    color: aqua;
 }
 
 .post-tags .post-tag {
@@ -68,4 +107,14 @@
     cursor: pointer;
     border: none;
     background-color: white;
+    padding: 0;
+    margin: 0;
+}
+
+.post-actions .like {
+    color: blue;
+}
+
+.post-actions .delete {
+    color: orangered;
 }

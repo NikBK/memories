@@ -1,21 +1,21 @@
-// import { useDispatch, useSelector } from "react-redux";
-// import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 
 import Form from "./components/Form/Form.jsx";
 import Posts from "./components/Posts/Posts.jsx";
-// import { getPosts } from "./actions/posts";
+import { getPosts } from "./actions/posts";
 import "./app.css";
-import { useState } from "react";
 
 function App() {
   const [currentId, setCurrentId] = useState(null);
-  // const posts = useSelector(state => state.posts);
-  // console.log(posts)
+  const [isUpdatingPost, setIsUpdatingPost] = useState(false);
+  const dispatch = useDispatch();
 
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getPosts());
-  // }, [dispatch])
+  useEffect(() => {
+    if (!isUpdatingPost) {
+      dispatch(getPosts())
+    }
+  }, [currentId, dispatch, isUpdatingPost])
 
   return (
     <div className="App">
@@ -23,8 +23,8 @@ function App() {
         <h2 className="app-header">Memories</h2>
       </header>
       <main>
-        <Form currentId={currentId} setCurrentId={setCurrentId} />
-        <Posts setCurrentId={setCurrentId} />
+        <Form currentId={currentId} setCurrentId={setCurrentId} setIsUpdatingPost={setIsUpdatingPost} />
+        <Posts setCurrentId={setCurrentId} setIsUpdatingPost={setIsUpdatingPost} />
       </main>
     </div>
   );
