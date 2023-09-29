@@ -1,4 +1,32 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.App header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: white;
+}
+
 .app-header {
     text-align: center;
     color: #6797ef;
+    margin: 0;
+    padding: 10px 0px;
+}
+
+.main-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: row;
+    margin: 10px;
+}
+
+@media screen and (max-width: 620px) {
+    .main-container {
+        flex-direction: column;
+    }
 }

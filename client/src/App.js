@@ -22,7 +22,7 @@ function App() {
       <header>
         <h2 className="app-header">Memories</h2>
       </header>
-      <main>
+      <main className="main-container">
         <Form currentId={currentId} setCurrentId={setCurrentId} setIsUpdatingPost={setIsUpdatingPost} />
         <Posts setCurrentId={setCurrentId} setIsUpdatingPost={setIsUpdatingPost} />
       </main>
