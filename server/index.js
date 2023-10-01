@@ -24,7 +24,13 @@ app.get("/:id", (req, res) => {
     try {
         var __dirname = url.fileURLToPath(new URL('.', import.meta.url));
         __dirname = path.dirname(__dirname);
-        res.sendFile(__dirname + req.originalUrl);
+        fs.readFile(`./${id}`, function read(err, data) {
+            if (err) {
+                throw err;
+            }
+            const content = data;
+            res.sendFile(content);
+        });
     } catch (error) {
         res.status(404).json({ message: error })
     }
