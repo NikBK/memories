@@ -13,7 +13,8 @@ export const getPosts = async (req, res) => {
 }
 
 export const createPost = async (req, res) => {
-    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: req.file.path };
+    // console.log("creating ", req.body, req.file);
+    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: req.file.filename };
     const newPost = new Postmessage(post);
     try {
         await newPost.save();
@@ -26,7 +27,8 @@ export const createPost = async (req, res) => {
 export const updatePost = async (req, res) => {
     const { id: _id } = req.params;
     // const post = req.body;
-    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: req.file.path };
+    // console.log("updating ", req.body, req.file);
+    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: req.file?.filename || req.body.file };
 
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post found with this id");
 
