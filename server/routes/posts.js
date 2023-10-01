@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
         cb(null, './public/images'); // Specify the directory where you want to store the uploaded images
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); // Generate a unique filename for the uploaded image
+        cb(null, file.originalname); // Generate a unique filename for the uploaded image
     }
 });
 
@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.get("/", getPosts);
 router.post("/", upload.single('file'), createPost);
-router.patch("/:id", updatePost);
+router.patch("/:id", upload.single('file'), updatePost);
 router.delete("/:id", deletePost);
 router.patch("/:id/likePost", likePost);
 

@@ -25,7 +25,8 @@ export const createPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
     const { id: _id } = req.params;
-    const post = req.body;
+    // const post = req.body;
+    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: req.file.path };
 
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post found with this id");
 
