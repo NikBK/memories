@@ -16,12 +16,15 @@ const Form = ({ currentId, setCurrentId, setIsUpdatingPost }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        var newFormData = new FormData();
+        newFormData.append("file", formData.selectedFile);
+        newFormData.append("otherDetails", JSON.stringify({ creator: formData.creator, title: formData.title, message: formData.message, tags: formData.tags }))
         if (currentId) {
             setIsUpdatingPost(true);
             dispatch(updatePost(currentId, formData, setIsUpdatingPost));
         }
         else {
-            dispatch(createPost(formData));
+            dispatch(createPost(newFormData));
         }
         clearForm();
     }
@@ -39,7 +42,7 @@ const Form = ({ currentId, setCurrentId, setIsUpdatingPost }) => {
                 <input className="formInput" required placeholder="Title" type="text" name="title" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
                 <textarea className="formInput" required placeholder="Message" type="text" name="message" value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} ></textarea>
                 <input className="formInput" required placeholder="Comma separated Tags" type="text" name="tags" value={formData.tags} onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(",").map(el => el.trim()) })} />
-                <input className="formInput" type="file" name="selectedFile" onChange={(e) => setFormData({ ...formData, selectedFile: URL.createObjectURL(e.target.files[0]) })} />
+                <input className="formInput" type="file" name="selectedFile" onChange={(e) => setFormData({ ...formData, selectedFile: e.target.files[0] })} />
                 <button className="formInput btn btn-bg-success" type="submit">Submit</button>
                 <button className="formInput btn btn-bg-danger" type="clear" onClick={clearForm}>Clear</button>
             </form>

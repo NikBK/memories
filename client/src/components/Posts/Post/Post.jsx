@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import randomColor from "randomcolor";
 import { useMemo } from "react";
 
+const HOST_URL = process.env.REACT_APP_BACKEND_HOST_URL;
+
 const Post = ({ post, setCurrentId, setIsUpdatingPost }) => {
     const time = getDays(post.createdAt);
     const dispatch = useDispatch();
@@ -13,7 +15,13 @@ const Post = ({ post, setCurrentId, setIsUpdatingPost }) => {
     return (
         <div className="card">
             <div className="post-media" style={post.selectedFile ? {} : { backgroundColor: `${color}` }}>
-                {post.selectedFile ? <img className="post-img" src={post.selectedFile} alt="memory" /> : null}
+                {post.selectedFile ?
+                    <img
+                        src={`${HOST_URL}/${post.selectedFile}`}
+                        alt={post.title}
+                        style={{ maxHeight: "250px", width: "100%" }}
+                    />
+                    : null}
                 <div className="overlay">
                     <div className="">
                         <h6 className="creator">{post.creator}</h6>
