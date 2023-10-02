@@ -71,7 +71,11 @@
 }
 
 .post-details .post-message {
-    margin: 5px 0px;
+    margin: 10px 0px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .post-edit button {
@@ -90,10 +94,6 @@
 .post-tags .post-tag {
     color: grey;
     cursor: pointer;
-}
-
-.post-message {
-    padding: 5px 0;
 }
 
 .post-actions {
