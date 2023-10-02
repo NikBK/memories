@@ -37,7 +37,7 @@ const Post = ({ post, setCurrentId, setIsUpdatingPost }) => {
                 <h3 className="post-title">
                     {post.title}
                 </h3>
-                <div className="post-message">
+                <div className="post-message" title={post.message}>
                     {post.message}
                 </div>
                 <div className="post-actions">
