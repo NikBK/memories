@@ -4,7 +4,7 @@ import multer from "multer";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './'); // Specify the directory where you want to store the uploaded images
+        cb(null, ''); // Specify the directory where you want to store the uploaded images
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname); // Generate a unique filename for the uploaded image

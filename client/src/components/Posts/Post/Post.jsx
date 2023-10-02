@@ -4,23 +4,32 @@ import { getDays } from "../../../utils/functions/getDays.js";
 import { useDispatch } from "react-redux";
 import randomColor from "randomcolor";
 import { useMemo } from "react";
+// import { Cloudinary } from "@cloudinary/url-gen";
+// import { AdvancedImage } from "@cloudinary/react";
 
-const HOST_URL = process.env.REACT_APP_BACKEND_HOST_URL;
+
+// const HOST_URL = process.env.REACT_APP_BACKEND_HOST_URL;
 
 const Post = ({ post, setCurrentId, setIsUpdatingPost }) => {
     const time = getDays(post.createdAt);
     const dispatch = useDispatch();
     const color = useMemo(() => randomColor(), []);
 
+    // const cld = new Cloudinary({ cloud: { cloudName: 'dzyl4mayk' } });
+    // const myImage = cld.image(post.selectedFile);
+
     return (
         <div className="card">
             <div className="post-media" style={post.selectedFile ? {} : { backgroundColor: `${color}` }}>
                 {post.selectedFile ?
-                    <img
-                        src={`${HOST_URL}/${post.selectedFile}`}
-                        alt={post.title}
-                        style={{ maxHeight: "250px", width: "100%" }}
-                    />
+                    <>
+                        <img
+                            src={post.selectedFile}
+                            alt={post.title}
+                            style={{ maxHeight: "250px", width: "100%" }}
+                        />
+                        {/* <AdvancedImage cldImg={myImage} style={{ maxHeight: "250px", width: "100%" }} /> */}
+                    </>
                     : null}
                 <div className="overlay">
                     <div className="">

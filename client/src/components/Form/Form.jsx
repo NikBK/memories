@@ -21,7 +21,6 @@ const Form = ({ currentId, setCurrentId, setIsUpdatingPost }) => {
         newFormData.append("otherDetails", JSON.stringify({ creator: formData.creator, title: formData.title, message: formData.message, tags: formData.tags }))
         if (currentId) {
             setIsUpdatingPost(true);
-            console.log(formData.selectedFile)
             dispatch(updatePost(currentId, newFormData, setIsUpdatingPost));
         }
         else {

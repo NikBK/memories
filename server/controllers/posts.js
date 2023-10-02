@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 import Postmessage from "../models/postMessage.js";
 import * as url from "url";
+import fs from 'fs';
 import path from "path";
+
+import cloudinary from "../utils/cloudinary.js";
 
 export const getPosts = async (req, res) => {
     try {
@@ -12,9 +15,17 @@ export const getPosts = async (req, res) => {
     }
 }
 
+function base64_encode(file) {
+    return "data:image/gif;base64," + fs.readFileSync(file, 'base64');
+}
+
 export const createPost = async (req, res) => {
     // console.log("creating ", req.body, req.file);
-    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: req.file.filename };
+    var base64str = base64_encode(req.file?.filename || req.body?.file);
+    const uploadResponse = await cloudinary.uploader.upload(base64str, { upload_preset: "memories_preset" }).catch(err => console.log(err))
+    // console.log(uploadResponse);
+
+    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: uploadResponse.secure_url };
     const newPost = new Postmessage(post);
     try {
         await newPost.save();
@@ -28,7 +39,15 @@ export const updatePost = async (req, res) => {
     const { id: _id } = req.params;
     // const post = req.body;
     // console.log("updating ", req.body, req.file);
-    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: req.file?.filename || req.body.file };
+
+    var file = req.body?.file;
+    if (req.file?.filename) {
+        var base64str = base64_encode(req.file?.filename);
+        const uploadResponse = await cloudinary.uploader.upload(base64str, { upload_preset: "memories_preset" }).catch(err => console.log(err))
+        file = uploadResponse.secure_url;
+    }
+
+    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: file };
 
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post found with this id");
 

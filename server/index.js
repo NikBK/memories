@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import fs from 'fs';
 import path from 'path';
 
-
+// import formData from "express-form-data";
 import postRoutes from "./routes/posts.js";
 import assetRoutes from "./routes/assets.js";
 
@@ -15,26 +15,27 @@ dotenv.config();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+// app.use(formData.parse())
 app.use(cors());
 app.use(express.static('./'));
 
 app.use("/posts", postRoutes);
 app.use("/public", assetRoutes);
-app.get("/:id", (req, res) => {
-    try {
-        var __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-        __dirname = path.dirname(__dirname);
-        fs.readFile(`./${id}`, function read(err, data) {
-            if (err) {
-                throw err;
-            }
-            const content = data;
-            res.sendFile(content);
-        });
-    } catch (error) {
-        res.status(404).json({ message: error })
-    }
-});
+// app.get("/:id", (req, res) => {
+//     try {
+//         var __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+//         __dirname = path.dirname(__dirname);
+//         fs.readFile(`./${id}`, function read(err, data) {
+//             if (err) {
+//                 throw err;
+//             }
+//             const content = data;
+//             res.sendFile(content);
+//         });
+//     } catch (error) {
+//         res.status(404).json({ message: error })
+//     }
+// });
 app.get("/", (req, res) => res.send("Welcome to Memories backend server"));
 
 function createDirectories(pathname) {
