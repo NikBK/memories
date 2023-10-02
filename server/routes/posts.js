@@ -6,8 +6,11 @@ import cloudinary from "../utils/cloudinary.js";
 
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
-    folder: 'memories', // Specify the folder in Cloudinary where the images will be stored
-    allowedFormats: ['jpg', 'jpeg', 'png'], // Specify the allowed image formats
+    params: {
+        folder: 'memories', // Specify the folder in Cloudinary where the images will be stored
+        allowedFormats: ['jpg', 'jpeg', 'png'], // Specify the allowed image formats
+        public_id: (req, file) => file.originalname
+    }
 });
 
 const upload = multer({ storage });
