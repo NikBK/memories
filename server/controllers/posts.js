@@ -20,12 +20,17 @@ function base64_encode(file) {
 }
 
 export const createPost = async (req, res) => {
-    // console.log("creating ", req.body, req.file);
-    var base64str = base64_encode(req.file?.filename || req.body?.file);
-    const uploadResponse = await cloudinary.uploader.upload(base64str, { upload_preset: "memories_preset" }).catch(err => console.log(err))
+    console.log("creating ", req.body, req.file);
+    // var base64str = base64_encode(req.file?.filename || req.body?.file);
+    // const uploadResponse = await cloudinary.uploader.upload(base64str, { upload_preset: "memories_preset" }).catch(err => console.log(err))
     // console.log(uploadResponse);
+    var file = null;
+    if (req.file && req.file.path && req.file.path != "null" && req.file.path != "undefined") {
+        file = req.file.path;
+    }
+    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: file };
 
-    const post = { ...JSON.parse(req.body.otherDetails), selectedFile: uploadResponse.secure_url };
+    // const post = { ...JSON.parse(req.body.otherDetails), selectedFile: uploadResponse.secure_url };
     const newPost = new Postmessage(post);
     try {
         await newPost.save();
@@ -38,16 +43,24 @@ export const createPost = async (req, res) => {
 export const updatePost = async (req, res) => {
     const { id: _id } = req.params;
     // const post = req.body;
-    // console.log("updating ", req.body, req.file);
+    console.log("updating ", req.body, req.file);
 
-    var file = req.body?.file;
-    if (req.file?.filename) {
-        var base64str = base64_encode(req.file?.filename);
-        const uploadResponse = await cloudinary.uploader.upload(base64str, { upload_preset: "memories_preset" }).catch(err => console.log(err))
-        file = uploadResponse.secure_url;
+    // var file = req.body?.file;
+    // if (req.file?.filename) {
+    //     var base64str = base64_encode(req.file?.filename);
+    //     const uploadResponse = await cloudinary.uploader.upload(base64str, { upload_preset: "memories_preset" }).catch(err => console.log(err))
+    //     file = uploadResponse.secure_url;
+    // }
+    var file = null;
+    if (req.file && req.file.path && req.file.path != "null" && req.file.path != "undefined") {
+        file = req.file.path;
     }
-
+    else if (req.body && req.body.file && req.body.file != "null" && req.body.file != "undefined") {
+        file = req.body.file;
+    }
     const post = { ...JSON.parse(req.body.otherDetails), selectedFile: file };
+
+    // const post = { ...JSON.parse(req.body.otherDetails), selectedFile: file };
 
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post found with this id");
 
